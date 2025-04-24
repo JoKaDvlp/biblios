@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajout Editeur{% endblock %}
+
+{% block body %}
+<section class='container px-4 w-50 m-auto'>
+    <h1>Ajout d'un Editeur</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+    {{ form_end(form) }}
+</section>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% set action = app.current_route == 'app_admin_author_new' ? 'Ajout' : 'Edition' %}
+
+{% block title %}{{ action }} Auteur{% endblock %}
+
+{% block body %}
+<section class='container px-4 w-50 m-auto'>
+    <h1>Ajout d'auteur</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-primary">Envoyer</button>
+    {{ form_end(form) }}
+</section>
+{% endblock %}
