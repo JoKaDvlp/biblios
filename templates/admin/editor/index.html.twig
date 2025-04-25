@@ -1,15 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello EditorController!{% endblock %}
+{% block title %}Liste d'éditeurs{% endblock %}
 
 {% block body %}
 <section class="container px-4">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Liste d'éditeurs</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/wamp64/www/biblios/src/Controller/Admin/EditorController.php</code></li>
-        <li>Your template at <code>C:/wamp64/www/biblios/templates/admin/editor/index.html.twig</code></li>
+    <ul class="list-group list-group-flush">
+    {% for editor in editors %}
+        <div class="card m-1">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    <a href="{{ path('app_admin_editor_show', {id: editor.id}) }}" class="streched-link link-dark">
+                        <h4 class="mb-1">{{ editor.name }}</h4>
+                    </a>
+                    <small class="text-muted">Identifiant : {{ editor.id }}</small>
+                </div>  
+            </div>
+        </div>
+    {% else %}
+        <li>Aucun enregistrement en base de données</li>
+    {% endfor %}
     </ul>
+    {{ pagerfanta(editors) }}
 </section>
 {% endblock %}

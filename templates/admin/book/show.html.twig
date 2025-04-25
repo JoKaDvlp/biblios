@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail d'un livre{% endblock %}
+
+{% block body %}
+<section class="container px-4">
+    <div class="example-wrapper">
+        <h1>Livre : </h1>
+        {% if book is not null %}
+            <div class="card mb-1 m-auto">
+                <div class="card-body">
+                    <div class="card-title d-flex justify-content-between">
+                        <h4 class="mb-1">{{ book.title }}</h4>
+                        <small class="text-muted">Identifiant : {{ book.id }}</small>
+                    </div>
+                    <p><small>{{ book.status.getLabel() }}</small></p>
+                    <div class="d-flex justify-content-between card-text">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">ISBN : {{ book.isbn }}</li>
+                            <li class="list-group-item">Lien couverture : {{ book.cover }}</li>
+                            <li class="list-group-item">Date d'édition : {{ book.editedAt|format_datetime('medium', 'none', locale: 'fr') }}</li>
+                            <li class="list-group-item">Nombre de pages : {{ book.pageNumber }}</li>
+                        </ul>
+                    </div>
+                    <p> Résumé :<br>{{ book.plot }}</p>
+                </div>
+            </div>
+        {% else %}
+        <div>Livre non trouvé</div>
+        {% endif %}
+        <a href="{{ path('app_admin_book_index') }}" class="btn btn-primary">Retour</a>
+        <a href="{{ path('app_admin_book_edit', {id: book.id}) }}" class="btn btn-warning">Editer</a>
+    </div>
+</section>
+{% endblock %}

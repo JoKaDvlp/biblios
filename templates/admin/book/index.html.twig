@@ -1,15 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello BookController!{% endblock %}
+{% block title %}Liste de livres{% endblock %}
 
 {% block body %}
-<section class="econtainer px-4">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<section class="container px-4">
+    <h1>Liste des livres</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/wamp64/www/biblios/src/Controller/Admin/BookController.php</code></li>
-        <li>Your template at <code>C:/wamp64/www/biblios/templates/admin/book/index.html.twig</code></li>
+    <ul class="list-group list-group-flush">
+    {% for book in books %}
+        <div class="card m-1">
+            <div class="card-body">
+                <div class="card-title d-flex justify-content-between">
+                    <a href="{{ path('app_admin_book_show', {id: book.id}) }}" class="streched-link link-dark">
+                        <h4 class="mb-1">{{ book.title }}</h4>
+                    </a>
+                    <small class="text-muted">Identifiant : {{ book.id }}</small>
+                </div>  
+            </div>
+        </div>
+    {% else %}
+        <li>Aucun enregistrement en base de données</li>
+    {% endfor %}
     </ul>
+    {{ pagerfanta(books) }}
 </section>
 {% endblock %}
