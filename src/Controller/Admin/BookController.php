@@ -4,14 +4,15 @@ namespace App\Controller\Admin;
 
 use App\Entity\Book;
 use App\Form\BookType;
+use Pagerfanta\Pagerfanta;
 use App\Repository\BookRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
-use Pagerfanta\Pagerfanta;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/admin/book')]
 final class BookController extends AbstractController
@@ -31,13 +32,15 @@ final class BookController extends AbstractController
         ]);
     }
 
-    /**
-     * Ajout et modification d'un livre
-     */
+    #[IsGranted('ROLE_AJOUT_DE_LIVRES')]
     #[Route('/new', name: 'app_admin_book_new', methods: ['GET', 'POST'])]
     #[Route('/{id}/edit', name: 'app_admin_book_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function new(?Book $book, Request $request, EntityManagerInterface $manager): Response
     {
+        if ($book) {
+            $this->denyAccessUnlessGranted('ROLE_EDITION_DE_LIVRES');
+        }
+
         $book ??= new Book();
 
         $form = $this->createForm(BookType::class, $book);
